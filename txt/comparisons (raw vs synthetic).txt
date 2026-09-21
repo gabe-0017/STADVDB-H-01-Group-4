@@ -1,0 +1,33 @@
+Row Count:
+
+Raw:
+SELECT COUNT(*), MIN(customer_id), MAX(customer_id) FROM customer;
+599	1	599
+SELECT COUNT(*), MIN(rental_id), MAX(rental_id) FROM rental;
+16044	1	16049
+SELECT COUNT(*), MIN(payment_id), MAX(payment_id) FROM payment;
+16044	1	16049
+
+Synthetic:
+SELECT COUNT(*), MIN(customer_id), MAX(customer_id) FROM customer;
+1000	1	1000
+SELECT COUNT(*), MIN(rental_id), MAX(rental_id) FROM rental;
+101044	1	101049
+SELECT COUNT(*), MIN(payment_id), MAX(payment_id) FROM payment;
+101770	1	101775
+
+-0-
+
+Execution Time:
+
+Raw:
+Q1: 0.062 sec / 0.000 sec
+Q2: 0.406 sec / 0.000 sec
+Q3: 14.390 sec / 0.000 sec
+Q4: 0.203 sec / 0.000 sec
+
+Synthetic:
+Q1: 0.563 sec / 0.000 sec
+Q2: 1.532 sec / 0.000 sec
+Q3: 155.047 sec / 0.000 sec
+Q4: 0.985 sec / 0.000 sec

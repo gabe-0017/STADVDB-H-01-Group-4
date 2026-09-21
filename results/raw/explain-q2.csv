@@ -1,0 +1,7 @@
+id,select_type,table,partitions,type,possible_keys,key,key_len,ref,rows,filtered,Extra
+1,SIMPLE,s,NULL,index,PRIMARY,idx_unique_manager,1,NULL,2,100.00,"Using index; Using temporary; Using filesort"
+1,SIMPLE,i,NULL,ref,"PRIMARY,idx_fk_film_id,idx_store_id_film_id",idx_store_id_film_id,1,sakila.s.store_id,2290,100.00,"Using index"
+1,SIMPLE,fc,NULL,ref,"PRIMARY,fk_film_category_category",PRIMARY,2,sakila.i.film_id,1,100.00,"Using index"
+1,SIMPLE,cat,NULL,eq_ref,PRIMARY,PRIMARY,1,sakila.fc.category_id,1,100.00,NULL
+1,SIMPLE,r,NULL,ref,"PRIMARY,idx_fk_inventory_id",idx_fk_inventory_id,3,sakila.i.inventory_id,3,100.00,"Using index"
+1,SIMPLE,p,NULL,ref,fk_payment_rental,fk_payment_rental,5,sakila.r.rental_id,1,100.00,NULL

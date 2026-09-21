@@ -1,0 +1,3 @@
+SELECT COUNT(*), MIN(customer_id), MAX(customer_id) FROM customer;
+SELECT COUNT(*), MIN(rental_id), MAX(rental_id) FROM rental;
+SELECT COUNT(*), MIN(payment_id), MAX(payment_id) FROM payment;

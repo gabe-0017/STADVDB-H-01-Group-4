@@ -1,0 +1,5 @@
+cd sakila-db
+mysql -u root -p < sakila-schema.sql
+mysql -u root -p < sakila-data.sql
+
+Note: Replace "root" with your username
