@@ -1,12 +1,26 @@
 USE sakila;
 
-EXPLAIN SELECT c.customer_id, c.first_name, c.last_name, c.store_id,
-       (SELECT SUM(p.amount) FROM payment p WHERE p.customer_id = c.customer_id) AS customer_total
-FROM customer c
-WHERE (SELECT SUM(p2.amount) FROM payment p2 WHERE p2.customer_id = c.customer_id)
-    > (SELECT AVG(store_totals.total)
-       FROM (SELECT c2.customer_id, SUM(p3.amount) AS total
-             FROM customer c2
-             JOIN payment p3 ON c2.customer_id = p3.customer_id
-             WHERE c2.store_id = c.store_id
-             GROUP BY c2.customer_id) AS store_totals);
+EXPLAIN FORMAT=JSON
+WITH customer_totals AS (
+    SELECT c.customer_id,
+           c.first_name,
+           c.last_name,
+           c.store_id,
+           SUM(p.amount) AS customer_total
+    FROM customer c
+    JOIN payment p ON p.customer_id = c.customer_id
+    GROUP BY c.customer_id, c.first_name, c.last_name, c.store_id
+),
+store_avg AS (
+    SELECT store_id, AVG(customer_total) AS avg_customer_total
+    FROM customer_totals
+    GROUP BY store_id
+)
+SELECT ct.customer_id,
+       ct.first_name,
+       ct.last_name,
+       ct.store_id,
+       ct.customer_total
+FROM customer_totals ct
+JOIN store_avg sa ON sa.store_id = ct.store_id
+WHERE ct.customer_total > sa.avg_customer_total;
